@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "e4f79618-0c5b-4b57-b1a4-b63ab582df3a",
+		"name": "parcial-practico-socio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14374221",
+		"_collection_link": "https://orange-crater-285324.postman.co/workspace/Team-Workspace~85cae800-6c88-4178-81ed-d5aa240a305f/collection/14374221-e4f79618-0c5b-4b57-b1a4-b63ab582df3a?action=share&source=collection_link&creator=14374221"
+	},
+	"item": [
+		{
+			"name": "CrearSocioValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"member_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombreUsuario\": \"Member1\",\r\n    \"correoElectronico\": \"member1@correo.com\",\r\n    \"fechaNacimiento\": \"2023-11-30T14:28:48.180Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearSocioInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"receta_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombreUsuario\": \"Member\",\r\n    \"correoElectronico\": \"member.correo.com\",\r\n    \"fechaNacimiento\": \"2023-11-30T14:28:48.180Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerTodosSocios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of members > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerUnSocio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerUnSocioInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarSocioValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombreUsuario\": \"Member1\",\r\n    \"correoElectronico\": \"member1@correo.com\",\r\n    \"fechaNacimiento\": \"2000-11-30T14:28:48.180Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarSocioInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombreUsuario\": \"Member1\",\r\n    \"correoElectronico\": \"member1@correo.com\",\r\n    \"fechaNacimiento\": \"2000-11-30T14:28:48.180Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarSocioValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarSocioInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/members/{{member_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"{{member_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "member_id",
+			"value": "3118ab4d-c7fc-4804-82e8-3b99bd9b68b3",
+			"type": "string"
+		},
+		{
+			"key": "member_id_invalido",
+			"value": "11a37f19-43c4-43a7-93c5-27801ba6f62f",
+			"type": "string"
+		}
+	]
+}

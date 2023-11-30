@@ -5,7 +5,7 @@ import { ClubDto } from './club.dto';
 import { ClubEntity } from './club.entity';
 import { plainToInstance } from 'class-transformer';
 
-@Controller('club')
+@Controller('clubs')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class ClubController {
     constructor(private readonly clubService: ClubService) {}

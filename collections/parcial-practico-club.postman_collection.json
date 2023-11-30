@@ -1,0 +1,440 @@
+{
+	"info": {
+		"_postman_id": "d8092bb9-5af6-4b62-9cba-6feed344f4d1",
+		"name": "parcial-practico-club",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14374221",
+		"_collection_link": "https://orange-crater-285324.postman.co/workspace/Team-Workspace~85cae800-6c88-4178-81ed-d5aa240a305f/collection/14374221-d8092bb9-5af6-4b62-9cba-6feed344f4d1?action=share&source=collection_link&creator=14374221"
+	},
+	"item": [
+		{
+			"name": "CrearClubValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"club_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Club\",\r\n    \"fechaFundacion\": \"2023-11-30T14:28:48.180Z\",\r\n    \"imagen\": \"https://imagen.com\",\r\n    \"descripcion\": \"Descripcion Club\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearClubInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"receta_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Club\",\r\n    \"fechaFundacion\": \"2023-11-30T14:28:48.180Z\",\r\n    \"imagen\": \"https://imagen.com\",\r\n    \"descripcion\": \"Descripcion Club Descripcion Club Descripcion Club Descripcion Club Descripcion Club Descripcion Club\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerTodosClubs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of clubs > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerUnClub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerUnClubInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El club con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarClubValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Club1\",\r\n    \"fechaFundacion\": \"2000-11-30T14:28:48.180Z\",\r\n    \"imagen\": \"https://imagen1.com\",\r\n    \"descripcion\": \"Descripcion Club1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarClubInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El club con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Club1\",\r\n    \"fechaFundacion\": \"2000-11-30T14:28:48.180Z\",\r\n    \"imagen\": \"https://imagen1.com\",\r\n    \"descripcion\": \"Descripcion Club1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarSocioValido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarSocioInvalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El club con el ID dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/clubs/{{club_id_invalido}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"clubs",
+						"{{club_id_invalido}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3000/api/v1"
+		},
+		{
+			"key": "club_id",
+			"value": "5b24afd1-cb66-4d79-949b-9584d217a3a8",
+			"type": "string"
+		},
+		{
+			"key": "club_id_invalido",
+			"value": "11a37f19-43c4-43a7-93c5-27801ba6f62f",
+			"type": "string"
+		}
+	]
+}
