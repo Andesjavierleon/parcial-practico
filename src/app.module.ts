@@ -10,25 +10,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [SocioModule, ClubModule, SocioClubModule,
-  TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'ParcialPracticoDB',
-    entities: [SocioEntity, ClubEntity],
-    dropSchema: false,
-    synchronize: true,
-    keepConnectionAlive: true
-    
-  }),
-  SocioModule,
-   ClubModule,
-   SocioClubModule,
-  
-],
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'ParcialPracticoDB',
+      entities: [SocioEntity, ClubEntity],
+      dropSchema: true,
+      synchronize: true,
+      keepConnectionAlive: true
+
+    }),
+    SocioModule,
+    ClubModule,
+    SocioClubModule,
+
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
