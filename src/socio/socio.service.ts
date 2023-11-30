@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SocioEntity } from './socio.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BusinessLogicException, BusinessError } from 'src/shared/errors/business-errors';
+import { BusinessLogicException, BusinessError } from '../shared/errors/business-errors';
 
 @Injectable()
 export class SocioService {
@@ -35,7 +35,7 @@ export class SocioService {
         if (!socio.correoElectronico.includes('@')) {
             throw new BusinessLogicException('El campo "correoElectronico" debe contener el carácter "@"', BusinessError.PRECONDITION_FAILED);
         }
-        
+
         const persistedSocio: SocioEntity = await this.socioRepository.findOne({ where: { id } });
         if (!persistedSocio)
             throw new BusinessLogicException("El socio con el ID dado no fue encontrado", BusinessError.NOT_FOUND);

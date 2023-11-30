@@ -5,7 +5,7 @@ import { ClubEntity } from 'src/club/club.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([SocioEntity, ClubEntity])],
+    imports: [TypeOrmModule.forFeature([SocioEntity])],
     providers: [SocioClubService]
 })
 export class SocioClubModule { }

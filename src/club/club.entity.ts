@@ -1,4 +1,5 @@
-import { SocioEntity } from 'src/socio/socio.entity';
+
+import { SocioEntity } from '../socio/socio.entity';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
